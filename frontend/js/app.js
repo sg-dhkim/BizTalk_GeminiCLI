@@ -1,5 +1,5 @@
 // app.js
-const API_BASE = window.location.origin; // 로컬 테스트 및 배포 시 동일 도메인 사용
+const API_BASE = window.location.origin;
 
 document.addEventListener("DOMContentLoaded", () => {
     const targetButtons = document.querySelectorAll(".target-btn");
@@ -9,11 +9,30 @@ document.addEventListener("DOMContentLoaded", () => {
     const outputText = document.getElementById("outputText");
     const loading = document.getElementById("loading");
 
+    // Tailwind classes for button states
+    const activeClasses = ["bg-blue-600", "text-white", "border-blue-600", "shadow-md"];
+    const inactiveClasses = ["bg-transparent", "text-slate-600", "border-slate-100"];
+
+    // Initialize buttons
+    targetButtons.forEach(btn => {
+        if (btn.classList.contains("active")) {
+            btn.classList.add(...activeClasses);
+            btn.classList.remove(...inactiveClasses);
+        } else {
+            btn.classList.add(...inactiveClasses);
+            btn.classList.remove(...activeClasses);
+        }
+    });
+
     // 수신 대상 버튼 클릭 이벤트
     targetButtons.forEach(button => {
         button.addEventListener("click", () => {
-            targetButtons.forEach(btn => btn.classList.remove("active"));
-            button.classList.add("active");
+            targetButtons.forEach(btn => {
+                btn.classList.remove("active", ...activeClasses);
+                btn.classList.add(...inactiveClasses);
+            });
+            button.classList.add("active", ...activeClasses);
+            button.classList.remove(...inactiveClasses);
         });
     });
 
@@ -72,13 +91,15 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
         navigator.clipboard.writeText(text).then(() => {
-            const originalText = copyBtn.innerText;
-            copyBtn.innerText = "복사 완료! ✅";
-            copyBtn.style.backgroundColor = "#10b981"; // 초록색으로 변경
+            const originalHTML = copyBtn.innerHTML;
+            copyBtn.innerHTML = "<span>✅</span> 복사 완료!";
+            copyBtn.classList.replace("bg-slate-100", "bg-emerald-100");
+            copyBtn.classList.replace("text-slate-500", "text-emerald-600");
 
             setTimeout(() => {
-                copyBtn.innerText = originalText;
-                copyBtn.style.backgroundColor = ""; // 원래 색상으로 복구
+                copyBtn.innerHTML = originalHTML;
+                copyBtn.classList.replace("bg-emerald-100", "bg-slate-100");
+                copyBtn.classList.replace("text-emerald-600", "text-slate-500");
             }, 2000);
         }).catch(err => {
             console.error("복사 실패:", err);
@@ -90,10 +111,18 @@ document.addEventListener("DOMContentLoaded", () => {
     function setLoading(isLoading) {
         if (isLoading) {
             loading.classList.remove("hidden");
+            loading.classList.add("flex");
             convertBtn.disabled = true;
-            convertBtn.innerText = "변환 중...";
+            convertBtn.innerHTML = `
+                <svg class="animate-spin -ml-1 mr-3 h-5 w-5 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewbox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                변환 중...
+            `;
         } else {
             loading.classList.add("hidden");
+            loading.classList.remove("flex");
             convertBtn.disabled = false;
             convertBtn.innerText = "변환하기";
         }
