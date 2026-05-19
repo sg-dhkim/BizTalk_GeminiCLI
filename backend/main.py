@@ -25,11 +25,12 @@ async def health_check():
     return {"status": "ok"}
 
 # 정적 파일 서빙 (프론트엔드)
-# frontend 디렉토리가 루트에 있으므로 backend 기준으로는 ../frontend
 frontend_path = os.path.join(os.path.dirname(os.path.dirname(__file__)), "frontend")
 
 if os.path.exists(frontend_path):
-    app.mount("/static", StaticFiles(directory=frontend_path), name="static")
+    # CSS, JS 폴더를 각각 마운트하여 index.html에서 상대 경로로 접근 가능하게 함
+    app.mount("/css", StaticFiles(directory=os.path.join(frontend_path, "css")), name="css")
+    app.mount("/js", StaticFiles(directory=os.path.join(frontend_path, "js")), name="js")
 
     @app.get("/")
     async def read_index():
