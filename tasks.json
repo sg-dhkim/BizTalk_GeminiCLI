@@ -1,0 +1,84 @@
+{
+  "project": "업무 말투 변환기 (BizTone Converter)",
+  "version": "1.0.0",
+  "description": "사용자가 입력한 내용을 상사, 동료, 고객 등 수신 대상에 적합한 비즈니스 말투로 자동 변환해주는 서비스",
+  "tasks": [
+    {
+      "id": "T1",
+      "category": "Setup",
+      "task": "프로젝트 환경 구성 (.env, .gitignore, requirements.txt)",
+      "status": "done",
+      "priority": "high"
+    },
+    {
+      "id": "T2",
+      "category": "Backend",
+      "task": "Pydantic 데이터 모델 정의 (backend/models/schemas.py)",
+      "status": "done",
+      "priority": "medium"
+    },
+    {
+      "id": "T3",
+      "category": "Backend",
+      "task": "수신 대상별 프롬프트 템플릿 작성 (backend/prompts/templates.py)",
+      "status": "done",
+      "priority": "medium"
+    },
+    {
+      "id": "T4",
+      "category": "Backend",
+      "task": "Upstage Solar-Pro2 연동 변환 로직 구현 (backend/services/tone_converter.py)",
+      "status": "done",
+      "priority": "high"
+    },
+    {
+      "id": "T5",
+      "category": "Backend",
+      "task": "API 엔드포인트(/api/convert) 구현 (backend/routers/convert.py)",
+      "status": "done",
+      "priority": "high"
+    },
+    {
+      "id": "T6",
+      "category": "Backend",
+      "task": "FastAPI 메인 앱 설정, CORS 및 Static 파일 서빙 (backend/main.py)",
+      "status": "done",
+      "priority": "medium"
+    },
+    {
+      "id": "T7",
+      "category": "Frontend",
+      "task": "UI 레이아웃 및 HTML 구조 설계 (frontend/index.html)",
+      "status": "done",
+      "priority": "medium"
+    },
+    {
+      "id": "T8",
+      "category": "Frontend",
+      "task": "Vanilla CSS 스타일링 및 로딩 UI 디자인 (frontend/css/style.css)",
+      "status": "done",
+      "priority": "low"
+    },
+    {
+      "id": "T9",
+      "category": "Frontend",
+      "task": "API 비동기 호출 및 UI 이벤트 처리 (frontend/js/app.js)",
+      "status": "done",
+      "priority": "high"
+    },
+    {
+      "id": "T10",
+      "category": "Frontend",
+      "task": "결과 텍스트 클립보드 복사 기능 구현",
+      "status": "done",
+      "priority": "low"
+    },
+    {
+      "id": "T11",
+      "category": "Deployment",
+      "task": "GitHub 푸시 및 Vercel 배포/환경변수 설정",
+      "status": "todo",
+      "priority": "medium"
+    }
+  ]
+}
